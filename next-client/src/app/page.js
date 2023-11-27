@@ -1,10 +1,10 @@
-import { HiOutlineCheckCircle, HiOutlineXCircle } from 'react-icons/hi2';
+import { HiOutlineCheckCircle, HiOutlineXCircle } from "react-icons/hi2";
 
 export default function Home() {
   const isConnected = true;
 
   return (
-    <main className="prose w-full flex flex-col mx-auto">
+    <main className="prose mx-auto flex w-full flex-col">
       <h1 className="text-center">기프티콘 발급</h1>
       <div className="flex flex-col gap-4">
         {isConnected ? (

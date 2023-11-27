@@ -1,17 +1,17 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-import { HiBars3CenterLeft } from 'react-icons/hi2';
+import { HiBars3CenterLeft } from "react-icons/hi2";
 
 export default function Navbar() {
   return (
-    <div className="flex justify-center w-full bg-base-100">
+    <div className="flex w-full justify-center bg-base-100">
       <nav className="navbar max-w-4xl">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <HiBars3CenterLeft size={24} />
             </div>
-            <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+            <ul className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow">
               <li>
                 <Link href="/">발급</Link>
               </li>
@@ -37,7 +37,7 @@ export default function Navbar() {
         <div className="navbar-end gap-2">
           <div className="join">
             <button className="btn btn-warning join-item">거래상태</button>
-            <select className="select select-bordered join-item">
+            <select className="join-item select select-bordered">
               <option disabled selected>
                 네트워크를 선택하세요
               </option>
