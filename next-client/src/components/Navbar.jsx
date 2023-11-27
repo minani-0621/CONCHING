@@ -37,8 +37,11 @@ export default function Navbar() {
         <div className="navbar-end gap-2">
           <div className="join">
             <button className="btn btn-warning join-item">거래상태</button>
-            <select className="join-item select select-bordered">
-              <option disabled selected>
+            <select
+              defaultValue={null}
+              className="join-item select select-bordered"
+            >
+              <option value={null} disabled>
                 네트워크를 선택하세요
               </option>
               <option value="MATIC_MUMBAI">폴리곤-뭄바이</option>

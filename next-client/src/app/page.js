@@ -29,8 +29,8 @@ export default function Home() {
           <label className="label">
             <span className="label-text">카테고리</span>
           </label>
-          <select className="select select-bordered">
-            <option disabled selected>
+          <select defaultValue={null} className="select select-bordered">
+            <option value={null} disabled>
               선택하세요
             </option>
             <option value="기본">기본</option>
