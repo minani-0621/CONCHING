@@ -35,14 +35,16 @@ export default function Navbar() {
           </ul>
         </div>
         <div className="navbar-end gap-2">
-          <button className="btn btn-warning">거래상태</button>
-          <select className="select select-bordered max-w-xs">
-            <option disabled selected>
-              네트워크를 선택하세요
-            </option>
-            <option value="MATIC_MUMBAI">폴리곤-뭄바이</option>
-            <option value="ETH_RINKEBY">이더리움-Rinkeby</option>
-          </select>
+          <div className="join">
+            <button className="btn btn-warning join-item">거래상태</button>
+            <select className="select select-bordered join-item">
+              <option disabled selected>
+                네트워크를 선택하세요
+              </option>
+              <option value="MATIC_MUMBAI">폴리곤-뭄바이</option>
+              <option value="ETH_RINKEBY">이더리움-Rinkeby</option>
+            </select>
+          </div>
         </div>
       </nav>
     </div>
