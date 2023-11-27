@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
     <html lang="ko">
       <body className={inter.className}>
         <Navbar />
-        <div className="flex-1 my-8">{children}</div>
+        <div className="flex-1 py-8 px-2">{children}</div>
         <Footer />
       </body>
     </html>
