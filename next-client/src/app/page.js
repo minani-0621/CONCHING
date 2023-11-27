@@ -1,34 +1,11 @@
-import { HiOutlineCheckCircle, HiOutlineXCircle } from "react-icons/hi2";
+import ConnectionInfo from "@/components/ConnectionInfo";
 
 export default function Home() {
-  const isConnected = true;
-
   return (
     <main className="prose mx-auto flex w-full flex-col">
       <h1 className="text-center">기프티콘 발급</h1>
       <div className="flex flex-col gap-4">
-        {isConnected ? (
-          <div role="alert" className="alert alert-success">
-            <HiOutlineCheckCircle size={24} />
-            <span>메타마스크에 연결되었습니다.</span>
-          </div>
-        ) : (
-          <div role="alert" className="alert alert-error">
-            <HiOutlineXCircle size={24} />
-            <span>메타마스크 연결에 실패했습니다.</span>
-          </div>
-        )}
-        <div className="form-control w-full">
-          <label className="label">
-            <span className="label-text">계정</span>
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className="input input-bordered w-full"
-            disabled
-          />
-        </div>
+        <ConnectionInfo />
         <div className="form-control w-full">
           <label className="label">
             <span className="label-text">발행자</span>
