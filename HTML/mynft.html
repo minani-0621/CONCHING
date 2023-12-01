@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONCHING</title>
+    <link rel="icon" type="image/svg+xml" href="Image/logo.png">
+
+    <!-- Bootstrap CSS 했음-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="./css/style.css">
+
+    <!-- jquery 했음 -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" crossorigin="anonymous"></script>
+    <script src="./js/jscript.js"></script>
+
+    <!-- ipfs 했음-->
+    <script src="./js/buffer.js"></script>
+    <script src="https://unpkg.com/ipfs-api/dist/index.js" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            // Khởi tạo IPFS
+            const ipfs = IpfsApi('ipfs.infura.io', '63342', {protocol: 'https'});
+
+            // Kiểm tra kết nối IPFS
+            ipfs.id().then(res => console.log('IPFS Connection Success:', res))
+                .catch(err => console.error('IPFS Connection Error:', err));
+
+
+        });
+    </script>
+
+
+    <!-- blockchain-->
+    <script type="text/javascript" src='./js/abi.js'></script>
+    <script type="text/javascript" src='./js/web3.min.js'></script>
+    <script>
+
+        $(window).load(async function () {
+
+        });
+
+    </script>
+</head>
+
+<body>
+
+
+<header>
+    <!-- Fixed navbar -->
+
+    <nav aria-label="Eighth navbar example" class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="Image/logo.png" alt="Logo" style="height: 40px; margin-right: 5px;">CONCHING
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarsExample07"
+                    aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarsExample07">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mynft.html"><b style="color: white;">조회</b></a>
+                    </li>
+                    <li class="nav-my favorite">
+                        <a class="nav-link" href="mygift.html">Gifticon</a>
+                    </li>
+                </ul>
+
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-warning" id="btn_setApprovalForAll">거래하기</button>
+                    <script>
+                        document.getElementById('btn_setApprovalForAll').addEventListener('click', function () {
+                            window.location.href = 'https://chidokun.github.io/p2p-file-transfer/';
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container">
+    <h1 class="bd-title text-center">민팅 내역</h1>
+
+    <div class="box-body" style="min-height:500px">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>순서</th>
+                <th>API</th>
+                <th>Gifticon 정보</th>
+                <th>설명</th>
+                <th>전화번호</th>
+                <th>판매 가격</th>
+                <th>유한기간</th>
+                <th>상태</th>
+            </tr>
+            </thead>
+            <tbody id="dynamicTbody2"></tbody>
+            <script>
+                function displayLocalStorageData() {
+                    // Kiểm tra xem có dữ liệu trong Local Storage không
+                    if (localStorage.getItem("description")) {
+                        // Nếu có, lấy dữ liệu và hiển thị nó trong các trường thông tin tương ứng
+                        document.getElementById("description").value = localStorage.getItem("description");
+                    }
+
+                    if (localStorage.getItem("phoneNumber")) {
+                        document.getElementById("phoneNumber").value = localStorage.getItem("phoneNumber");
+                    }
+
+                    if (localStorage.getItem("fileDisplay")) {
+                        document.getElementById("file-display").value = localStorage.getItem("fileDisplay");
+                    }
+
+                    if (localStorage.getItem("brand")) {
+                        document.getElementById("brand").value = localStorage.getItem("brand");
+                    }
+
+                    if (localStorage.getItem("productName")) {
+                        document.getElementById("productName").value = localStorage.getItem("productName");
+                    }
+
+                    if (localStorage.getItem("startDate")) {
+                        document.getElementById("startDate").value = localStorage.getItem("startDate");
+                    }
+
+                    if (localStorage.getItem("endDate")) {
+                        document.getElementById("endDate").value = localStorage.getItem("endDate");
+                    }
+
+                    if (localStorage.getItem("code")) {
+                        document.getElementById("code").value = localStorage.getItem("code");
+                    }
+
+                    if (localStorage.getItem("price")) {
+                        document.getElementById("price").value = localStorage.getItem("price");
+                    }
+
+                    if (localStorage.getItem("apiResponse")) {
+                        // Nếu có dữ liệu JSON, bạn có thể phân tích nó và sử dụng
+                        var responseData = JSON.parse(localStorage.getItem("apiResponse"));
+                        // Ví dụ: hiển thị dữ liệu từ JSON
+                        console.log(responseData);
+                        // Đảm bảo rằng bạn có các trường thông tin HTML tương ứng để hiển thị dữ liệu JSON
+                        // Ví dụ: document.getElementById("apiResponseField").innerText = responseData.someField;
+                    }
+                    window.onload = function () {
+                        displayLocalStorageData();
+                    };
+                }
+            </script>
+        </table>
+
+    </div>
+</div>
+
+<footer class="footer" style="margin-top: 30px">
+    <div class="container">
+        <h1 class="bd-title text-center">거래 내역</h1>
+
+        <div class="box-body" style="min-height:500px">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>순서</th>
+                    <th>API</th>
+                    <th>Gifticon 정보</th>
+                    <th>판매자</th>
+                    <th>전화번호</th>
+                    <th>금액</th>
+                    <th>유한기간</th>
+                    <th>상태</th>
+                </tr>
+                </thead>
+                <tbody id="dynamicTbody"></tbody>
+            </table>
+        </div>
+    </div>
+
+</footer>
+
+
+<script src="./js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
+
+

@@ -3,32 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>콘칭 (관리자)</title>
+    <title>CONCHING</title>
+    <link rel="icon" type="image/svg+xml" href="Image/logo.png">
 
-
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS 했음-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>
-
     <link rel="stylesheet" href="./css/style.css">
 
-    <!-- jquery  -->
+    <!-- jquery 했음 -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" crossorigin="anonymous"></script>
     <script src="./js/jscript.js"></script>
 
-    <!-- ipfs -->
+    <!-- ipfs 했음-->
     <script src="./js/buffer.js"></script>
     <script src="https://unpkg.com/ipfs-api/dist/index.js" crossorigin="anonymous"></script>
+    <script>
+        function updateFileName() {
+            var fileInput = document.getElementById('uploadfile');
+            var fileDisplayArea = document.getElementById('file-display');
+
+            // Check if any file is selected
+            if (fileInput.files.length > 0) {
+                var fileName = fileInput.files[0].name;
+                fileDisplayArea.value = fileName;
+            }
+        }
+    </script>
 
     <!-- blockchain-->
     <script type="text/javascript" src='./js/abi.js'></script>
     <script type="text/javascript" src='./js/web3.min.js'></script>
+    <script>
 
+        $(window).load(async function () {
+
+        });
+
+    </script>
     <!-- Contracts.mjs-->
-    <script src="js/contracts.mjs"></script>
+    <script src="js/abj.js"></script>
 
     <script>
         $(document).ready(function () {
+            // 스마트 컨트랙트에 연결하여 NFT 목록을 가져옵니다
+            async function fetchNFTs() {
+                if (window.web3) {
+                    try {
+                        const accounts = await web3.eth.getAccounts();
+                        const userAccount = accounts[0]; // MetaMask에서 첫 번째 계정을 가져옴
+
+                        // 스마트 계약에서 메소드를 호출
+                        let nfts = await myContract.methods.getMyNFTs().call({from: userAccount});
+
+                        // NFT 목록을 표시
+                        displayNFTs(nfts);
+                    } catch (error) {
+                        console.error("NFT 목록을 가져올 수 없음:", error);
+                    }
+                } else {
+                    console.log("Web3를 찾을 수 없음.");
+                }
+            }
+
+            function displayNFTs(nfts) {
+                const nftContainer = document.getElementById("nftContainer"); // nftContainer라는 ID를 가진 div가 있다고 가정
+
+                nfts.forEach(nft => {
+                    const nftElement = document.createElement("div");
+                    nftElement.className = "nft-card"; // CSS를 적용하기 위해 클래스를 추가
+                    nftElement.innerHTML = `
+            <h3>${nft.name}</h3>
+            <img src="${nft.image}" alt="${nft.name}">
+            <p>${nft.description}</p>
+            <!-- NFT에서 다른 모든 정보를 추가 -->
+        `;
+                    nftContainer.appendChild(nftElement);
+                });
+            }
+
+
             // 메타마스크 연결 및 초기화 함수
             async function initializeMetaMask() {
                 // 메타마스크 설치 여부 확인
@@ -37,137 +91,342 @@
                     console.log("메타마스크가 설치되었습니다.");
                     try {
                         // 메타마스크 연결 요청
+                        $("#resultbrowsers").text("메타마스크 연결하세요!");
                         const accounts = await ethereum.request({method: "eth_requestAccounts"});
                         $("#showAccount").text(accounts[0]);
-                        $("#resultbrowsers").text("메타마스크에 연결되었습니다.");
+                        $("#resultbrowsers").html("<span id='checkmark'>✔</span> 메타마스크에 연결되었습니다.").addClass('green-alert');
+                        // 3초 뒤에 알림 숨기기
+                        setTimeout(function () {
+                            $("#resultbrowsers").fadeOut();
+                        }, 3000);
 
                         // Web3 인스턴스 생성
                         window.web3 = new Web3(window.ethereum);
-                        // 여기에 추가적인 블록체인 상호작용 코드를 넣을 수 있습니다.
+                        // 필요한 경우 여기에 블록체인 인터렉티브 코드를 추가한다.
                     } catch (error) {
                         console.log(`에러: ${error}`);
-                        $("#resultbrowsers").text("메타마스크 연결에 실패했습니다.");
+                        $("#resultbrowsers").html("<span id='checkmark'>x</span> 메타마스크 연결에 실패했습니다.").addClass('orange-alert');
                     }
                 } else {
-                    $("#resultbrowsers").text("메타마스크가 설치되어 있지 않습니다.");
+                    $("#resultbrowsers").html("<span id='checkmark'>x</span> 메타마스크가 설치되어 있지 않습니다.").addClass('orange-alert');
                 }
             }
 
-            // 메타마스크 초기화 호출
+            //함수 메타마스크 호출
             initializeMetaMask();
         });
     </script>
-
-
 </head>
 <body>
 <input type="hidden" id="hash_img_url" name="hash_img_url"/>
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Eighth navbar example">
+<nav aria-label="Eighth navbar example" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">콘칭 : 기프티콘 매칭 시스템</a>
+        <a class="navbar-brand" href="#">
+            <img src="Image/logo.png" alt="Logo" style="height: 40px; margin-right: 5px;">CONCHING
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarsExample07"
                 aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarsExample07">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="index.html">발급</a>
+                    <a class="nav-link active" aria-current="page" href="index.html"></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="mynft.html">조회</a>
                 </li>
+                <li class="nav-my favorite">
+                    <a class="nav-link" href="mygift.html">Gifticon</a>
+                </li>
             </ul>
 
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-warning" id="btn_setApprovalForAll">거래하기</button>
+                <script>
+                    document.getElementById('btn_setApprovalForAll').addEventListener('click', function () {
+                        window.location.href = 'https://chidokun.github.io/p2p-file-transfer/';
+                    });
+                </script>
 
-            <div class="d-flex">
-                <button type="button" class="btn btn-warning col-md-6" id="btn_setApprovalForAll">거래상태</button>
-                &nbsp;&nbsp;
-                <span class="col-md-7">
-                        <select class="form-select" aria-label="블록체인 네트워크" id="selectNetwork">
-                            <option value="">네트워크를 선택하세요</option>
-                            <option value="MATIC_MUMBAI">폴리곤-뭄바이</option>
-                            <option value="ETH_RINKEBY">이더리움-Rinkeby</option>
-                        </select>
-                    </span>
             </div>
-
-
         </div>
     </div>
 </nav>
 
 <div class="container">
+    <h1 class="font1 text-center title">
+        Gifticon Share System
+        <br>
+        <span class="smaller-font">Hybrid Architecture</span>
+    </h1>
+    <div class="col-12 py-3">
+        <span class="form-control" id="resultbrowsers"></span>
+    </div>
 
-
-    <h1 class="bd-title text-center" style="margin-top: 30px">기프티콘 발행</h1>
-
-
-    <div class="box-body">
-
-
-        <div class="col-12  py-3">
-            <span class="form-control" id="resultbrowsers"></span>
-        </div>
-
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">계정</span>
-            </div>
-
-            <span class="form-control" id="showAccount"></span>
-
-        </div>
-
-
-        <div class="col-12">
-            <label for="name" class="form-label">발행자</label>
-            <input type="text" class="form-control" id="name" placeholder="발행자를 입력하세요" value=""/>
-        </div>
-
-
-        <div class="col-12 py-3">
-            <label for="uploadfile" class="form-label">대표이미지</label>
-            <div class="input-group input-group-sm">
-                <input type="file" class="form-control" name="uploadfile" id="uploadfile"/>
-                <span class="input-group-btn">
-                        <button type="button" class="btn btn-secondary btn-flat" id="btn_uploadfile">
-                            Upload
-                        </button>
-                    </span>
-            </div>
-        </div>
-
-        <small class="text-muted"><a id="ipfs_file_url" target="_blank"></a></small>
-
-
+    <div class="row">
         <div class="col-12 py-3">
             <div class="form-group">
-                <label for="category">카테고리</label>
-                <select class="selectpicker form-control" name="category" id="category">
-                    <option value="">선택하세요</option>
-                    <option value="기본">기본</option>
-                    <option value="중요">중요</option>
-                    <option value="기타">기타</option>
-                </select>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">계정</span>
+                    </div>
+                    <span class="form-control" id="showAccount"></span>
+                </div>
+            </div>
+            <div class="box-body mb-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">설명</span>
+                            </div>
+                            <input type="text" class="form-control" id="description" placeholder="설명을 입력하세요" value=""/>
+                        </div>
+                        <div id="description-error-message" style="color: red;"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">전화번호</span>
+                            </div>
+                            <input type="text" class="form-control" id="phoneNumber" placeholder="전화번호를 입력하세요"
+                                   value=""/>
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                                    onclick="validateInfo()">
+                                확인
+                            </button>
+                        </div>
+                        <div id="error-message" style="color: red;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 py-3 mb-3">
+                <div class="input-group" style="margin-top: -32px;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">기프티콘</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="No file chosen" readonly id="file-display">
+                    <input type="file" name="uploadfile" id="uploadfile" hidden onchange="updateFileName()"/>
+                    <button type="button" class="btn btn-secondary btn-flat" id="uploadButton"
+                            onclick="document.getElementById('uploadfile').click()">
+                        Upload
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="col-12 py-3 mb-3">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <div class="input-group" style="margin-top: -32px;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">브랜드</span>
+                            </div>
+                            <input type="text" class="form-control" id="brand">
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <div class="input-group" style="margin-top: -32px;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">이름 상품</span>
+                            </div>
+                            <input type="text" class="form-control" id="productName">
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <div class="input-group" style="margin-top: 15px;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">유효기한</span>
+                            </div>
+                            <input type="date" class="form-control" id="startDate">
+                            <span class="input-group-text">~</span>
+                            <input type="date" class="form-control" id="endDate">
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <div class="input-group" style="margin-top: 15px;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Code</span>
+                            </div>
+                            <input type="text" class="form-control" id="code">
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <div class="input-group" style="margin-top: 15px;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">가격</span>
+                            </div>
+                            <input type="text" class="form-control" id="price">
+                            <div class="input-group-append">
+                            <span class="input-group-text"
+                                  style="background-color: transparent; border-left: none;">원</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <div class="input-group" style="margin-top: 15px;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">상태</span>
+                            </div>
+                            <select class="form-control" id="status">
+                                <!--추가 함수: Gifticon 상태 확인 통과 NFT-->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="d-flex align-items-center justify-content-center mb-3">
+                    <div class="input-group" style="margin-right: 20px; margin-top: -32px;">
+                        <div class="input-group" style="margin-top: 15px;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">판매 가격</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="판매 가격을 입력하세요" aria-label="SellingPrice"
+                                   aria-describedby="basic-addon1">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-transparent" id="basic-addon2">원</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 divResponse">
+                <span class="response-text-center">Response API:</span>
+                <script>
+                    // Assuming you have an API endpoint and you want to make a request
+                    // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint URL
+
+                    const apiEndpoint = 'http://localhost:63342/Project/HTML/index.html?_ijt=gmvh422rurgde1k7k5iu5jfotk&_ij_reload=RELOAD_ON_SAVE#';
+
+                    // Function to make an API request
+                    async function makeApiRequest() {
+                        try {
+                            const response = await fetch(apiEndpoint);
+
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+
+                            const data = await response.json();
+
+                            // Assuming you have a <div> element with the class "response-text-center" to display the API response
+                            const responseElement = document.querySelector('.response-text-center');
+
+                            // Display the API response in the response element
+                            responseElement.textContent = `API Response: ${JSON.stringify(data)}`;
+                        } catch (error) {
+                            console.error('Error:', error);
+
+                            // Handle error and display an error message if needed
+                            const responseElement = document.querySelector('.response-text-center');
+                            responseElement.textContent = 'Error occurred while making the API request.';
+                        }
+                    }
+
+                    // Call the function to make the API request when needed, e.g., when a button is clicked
+                    document.getElementById('bnt_mint').addEventListener('click', makeApiRequest);
+
+                </script>
             </div>
         </div>
 
-
-        <div class="col-12 divResponse">
-            <pre class="response"><span id="resultbox">Response API:</span></pre>
-        </div>
-
-        <div>
+        <div class="d-flex justify-content-center">
             <button type="button" class="btn btn-primary" id="bnt_mint">민팅하기</button>
-        </div>
-    </div>
-</div>
+            <script>
+                async function handleMintButtonClick() {
+                    try {
+                        const apiResponse = await fetch("http://localhost:63342/Project/HTML/index.html?_ijt=gmvh422rurgde1k7k5iu5jfotk&_ij_reload=RELOAD_ON_SAVE#", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                // API request data here
+                            }),
+                        });
 
+                        if (!apiResponse.ok) {
+                            throw new Error("Lỗi khi gửi yêu cầu đến API");
+                        }
+
+                        const responseData = await apiResponse.json();
+
+                        // div를 만들어 API 응답을 표시
+                        const apiResponseElement = document.getElementById("api-response");
+                        apiResponseElement.textContent = JSON.stringify(responseData, null, 2);
+
+                        // mynft.html에 입력한 정보를 저장 (미완성)
+                        // 정보를 저장하려면 Local Storage를 사용하거나 쿠키를 생성하거나 심지어 해당 정보를 서버로 보낼 수 있습니다.
+
+                        // 데이터를 Local Storage에 저장
+                        localStorage.setItem("description", document.getElementById("description").value);
+                        localStorage.setItem("phoneNumber", document.getElementById("phoneNumber").value);
+                        localStorage.setItem("fileDisplay", document.getElementById("file-display").value);
+                        localStorage.setItem("brand", document.getElementById("brand").value);
+                        localStorage.setItem("productName", document.getElementById("productName").value);
+                        localStorage.setItem("startDate", document.getElementById("startDate").value);
+                        localStorage.setItem("endDate", document.getElementById("endDate").value);
+                        localStorage.setItem("code", document.getElementById("code").value);
+                        localStorage.setItem("price", document.getElementById("price").value);
+                        localStorage.setItem("key", "value");
+                        localStorage.setItem("apiResponse", JSON.stringify(responseData));
+
+                        // Local Storage에서 데이터를 읽어
+                        const savedDescription = localStorage.getItem("description");
+                        const savedPhoneNumber = localStorage.getItem("phoneNumber");
+                        const savedFileDisplay = localStorage.getItem("fileDisplay");
+                        const savedBrand = localStorage.getItem("brand");
+                        const savedProductName = localStorage.getItem("productName");
+                        const savedStartDate = localStorage.getItem("startDate");
+                        const savedEndDate = localStorage.getItem("endDate");
+                        const savedCode = localStorage.getItem("code");
+                        const savedPrice = localStorage.getItem("price");
+                        const savedApiResponse = JSON.parse(localStorage.getItem("apiResponse"));
+
+                        //필요하면 Local Storage에서 데이터를 사용
+                        document.getElementById("description").value = savedDescription;
+                        document.getElementById("phoneNumber").value = savedPhoneNumber;
+                        document.getElementById("file-display").value = savedFileDisplay;
+                        document.getElementById("brand").value = savedBrand;
+                        document.getElementById("productName").value = savedProductName;
+                        document.getElementById("startDate").value = savedStartDate;
+                        document.getElementById("endDate").value = savedEndDate;
+                        document.getElementById("code").value = savedCode;
+                        document.getElementById("price").value = savedPrice;
+
+                        // API 응답을 표시
+                        if (savedApiResponse) {
+                            const apiResponseElement = document.getElementById("api-response");
+                            apiResponseElement.textContent = JSON.stringify(savedApiResponse, null, 2);
+                        }
+                    } catch (error) {
+                        // Try block 내에서 오류가 발생할 때 오류 처리
+                        console.error("Đã xảy ra lỗi:", error);
+                    } finally {
+                        // finally 블록 내의 코드는 항상 실행되며 오류 여부에 관계없이
+                        // 필요한 경우 여기에 정리 작업을 추가하거나 추가 코드를 실행할 수 있습니다
+                    }
+                }
+
+                document.getElementById('bnt_mint').addEventListener('click', makeApiRequest);
+            </script>
+            <div class="response-container">
+                <pre id="api-response"></pre>
+            </div>
+        </div>
+
+    </div>
+    <style>
+        #file-display {
+            background-color: white;
+        }
+    </style>
+
+    <small class="text-muted"><a id="ipfs_file_url" target="_blank"></a></small>
+</div>
 
 <script src="./js/bootstrap.bundle.min.js"></script>
 </body>
