@@ -34,15 +34,77 @@
     <!-- blockchain-->
     <script type="text/javascript" src='./js/abi.js'></script>
     <script type="text/javascript" src='./js/web3.min.js'></script>
+
+    <!--Kakao Developers-->
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script>
+        Kakao.init('7d88d68e426589084a0fd660ee4fd579'); // Replace 'YOUR_APP_KEY' with your actual JavaScript key
+        console.log(Kakao.isInitialized());
+    </script>
+    <script>
+        function kakaoLogin() {
+            Kakao.Auth.login({
+                success: function (authObj) {
+                    console.log(authObj);
 
-        $(window).load(async function () {
+                    // Fetch user details
+                    Kakao.API.request({
+                        url: '/v2/user/me',
+                        success: function (res) {
+                            console.log(res);
+                            // Process user information
+                        },
+                        fail: function (error) {
+                            console.error(error);
+                        }
+                    });
+                },
+                fail: function (err) {
+                    console.error(err);
+                }
+            });
+        }
+    </script>
+    <script>
+        function combinedFunction() {
+            // Assuming validateInfo() is your existing validation function
+            if (validateInfo()) {
+                kakaoLogin(); // Call the Kakao login function after successful validation
+            } else {
+                // Handle validation failure if needed
+            }
+        }
 
-        });
+        function validateInfo() {
+            var description = document.getElementById("description").value;
+            var phoneNumber = document.getElementById("phoneNumber").value;
+            var message = '';
+            var valid = true;
+
+            // Description validation: only letters A-Z, a-z
+            if (!/^[A-Za-z\s]+$/.test(description)) {
+                valid = false;
+                message += 'Please enter a valid description (only letters A-Z, a-z).\n';
+            }
+
+            // Phone number validation: format 010xxxxxxx (x: 0-9)
+            if (!/^010[0-9]{4}[0-9]{4}$/.test(phoneNumber)) {
+                valid = false;
+                message += 'Please enter a valid phone number (format 12 seri: 010xxxxxxx).\n';
+            }
+
+            if (!valid) {
+                alert(message);
+            }
+
+            return valid;
+        }
+
 
     </script>
+
     <!-- Contracts.mjs-->
-    <script src="js/abj.js"></script>
+    <script src="js/abi.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -194,7 +256,7 @@
                             <input type="text" class="form-control" id="phoneNumber" placeholder="전화번호를 입력하세요"
                                    value=""/>
                             <button class="btn btn-outline-secondary" type="button" id="button-addon2"
-                                    onclick="validateInfo()">
+                                    onclick="combinedFunction()">
                                 확인
                             </button>
                         </div>
