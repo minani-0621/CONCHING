@@ -1,0 +1,88 @@
+.orange-alert {
+    background-color: orange;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.green-alert {
+    background-color: #32CD32; /* Màu xanh lá */
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.custom-x {
+    font-weight: bold;
+    color: red; /* Màu sắc của dấu X */
+    font-size: 20px; /* Kích thước của dấu X */
+    /* Thêm các thuộc tính khác để tùy chỉnh theo ý bạn */
+}
+
+#checkmark {
+    color: green;
+    font-weight: bold;
+}
+
+img {
+    max-width: 180px; /* Thay đổi kích thước tối đa của logo */
+    height: auto; /* Đảm bảo tỷ lệ hình ảnh được giữ nguyên */
+    /* Thêm bất kỳ kiểu CSS nào khác bạn muốn tùy chỉnh */
+}
+
+.navbar-brand {
+    font-family: Georgia, 'Times New Roman', Times, serif; /* Phong cách thay thế cho San Francisco */
+    /* Thêm các thuộc tính CSS khác ở đây nếu cần */
+}
+
+.font1 {
+    font-family: Georgia, 'Times New Roman', Times, serif; /* Phong cách thay thế cho San Francisco */
+    /* Thêm các thuộc tính CSS khác ở đây nếu cần */
+    font-size: 50px; /* Kích thước chữ */
+    font-weight: bold; /* In đậm */
+    text-align: center; /* Căn giữa ngang */
+    margin-bottom: 0px;
+    display: block;
+}
+
+.smaller-font {
+    margin-top: 0px;
+    font-size: 0.35em; /* Ví dụ: 75% kích thước của kích thước chữ mặc định */
+}
+
+.response-text {
+    color: blue;
+    font-weight: bold;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+
+.title {
+    display: block; /* Khoá kiểu hiển thị là block */
+    line-height: 0.5; /* Giảm khoảng cách giữa các dòng */
+    margin-top: 12px; /* Khoảng cách phía trên của Gifticon Share System */
+    margin-bottom: 0px; /* Khoảng cách phía dưới của Gifticon Share System */
+    width: 100%; /* Chiều rộng cố định (nếu cần) */
+    height: auto; /* Chiều cao tự động (nếu cần) */
+    /* position: fixed; /* Khoá vị trí (nếu cần) */
+}
+
+.divResponse {
+    display: flex;
+    flex-direction: column;
+    color: blue; /* Đổi màu chữ thành màu xanh dương */
+    font-weight: bold; /* Thêm in đậm */
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    padding: 7px;
+    font-size: 15px;
+    overflow: auto;
+    margin-top: 10px; /* Nâng cao phần trên */
+    margin-bottom: 30px; /* Giữ nguyên khoảng cách phía dưới */
+    white-space: pre-wrap;
+    word-break: break-word;
+    height: auto;
+}
