@@ -1,11 +1,8 @@
-import ConnectionInfo from "@/components/ConnectionInfo";
-
 export default function Mynft() {
   return (
     <main className="prose mx-auto flex w-full flex-col">
       <h1 className="text-center">기프티콘 조회</h1>
-      <div className="flex flex-col gap-4">
-        <ConnectionInfo />
+      <div className="flex flex-col">
         <div className="stats shadow">
           <div className="stat">
             <div className="stat-title">Total Gifticons</div>
@@ -13,7 +10,7 @@ export default function Mynft() {
           </div>
         </div>
         <div className="overflow-x-auto">
-          <table className="table m-0">
+          <table className="table">
             <thead>
               <tr>
                 <th></th>
