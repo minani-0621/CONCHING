@@ -97,14 +97,95 @@
                 <th>순서</th>
                 <th>API</th>
                 <th>Gifticon 정보</th>
-                <th>설명</th>
-                <th>전화번호</th>
+                <th>이미지</th>
                 <th>판매 가격</th>
                 <th>유한기간</th>
                 <th>상태</th>
             </tr>
             </thead>
-            <tbody id="dynamicTbody2"></tbody>
+            <tbody>
+            <tr class="mobile_detail_view">
+                <td class="opertnTy">
+                    1
+                </td>
+                <td class="opertnTme" onclick="viewMobileDetail(this);">
+                    72GAJD128H1321Y2871SN6
+                <td class="gradNm mobile_detail">
+                    <div class="mobile_view title">편의점금액권(일반)</div>
+                    <div class="mobile_view th">CU 모바일상품권 5천원권</div>
+                </td>
+                <td class="mobile_detail">
+                    <div class="mobile_view th">
+                        <img src="Image/G00000410767.jpg" alt="Hình ảnh" width="100" height="80"/>
+                    </div>
+                </td>
+                <td class="mobile_detail">
+                    <div class="mobile_view th">5000원</div>
+                </td>
+                <td class="mobile_detail">
+                    <div class="mobile_view th">2023.01.31</div>
+                </td>
+                <td class="mobile_detail">
+                    <div class="mobile_view th">판매 중</div>
+                </td>
+            </tr>
+            </tbody>
+            <tbody>
+            <tr class="mobile_detail_view">
+                <td class="opertnTy">
+                    2
+                </td>
+                <td class="opertnTme" onclick="viewMobileDetail(this);">
+                    52678AH328900DKA67D2
+                </td>
+                <td class="gradNm mobile_detail">
+                    <div class="mobile_view title">편의점금액권(일반)</div>
+                    <div class="mobile_view th">GS25 모바일상품권 5천원권</div>
+                </td>
+                <td class="mobile_detail">
+                    <div class="mobile_view th">
+                        <img src="Image/G00000631091.jpg" alt="Hình ảnh" width="100" height="80"/>
+                    </div>
+                </td>
+                <td class="mobile_detail">
+                    <div class="mobile_view th">5000원</div>
+                </td>
+                <td class="mobile_detail">
+                    <div class="mobile_view th">2024.02.15</div>
+                </td>
+                <td class="mobile_detail">
+                    <div class="mobile_view th">판매 완료</div>
+                </td>
+            </tr>
+            </tbody>
+            <tbody>
+            <tr class="mobile_detail_view">
+                <td class="opertnTy">
+                    3
+                </td>
+                <td class="opertnTme" onclick="viewMobileDetail(this);">
+                    89DFI238HD239VPLC239C
+                </td>
+                <td class="gradNm mobile_detail">
+                    <div class="mobile_view title">빽다방</div>
+                    <div class="mobile_view th">아메리카노(HOT)</div>
+                </td>
+                <td class="mobile_detail">
+                    <div class="mobile_view th">
+                        <img src="Image/G00001810962.jpg" alt="Hình ảnh" width="100" height="80"/>
+                    </div>
+                </td>
+                <td class="mobile_detail">
+                    <div class="mobile_view th">1500원</div>
+                </td>
+                <td class="mobile_detail">
+                    <div class="mobile_view th">2023.12.25</div>
+                </td>
+                <td class="mobile_detail">
+                    <div class="mobile_view th">판매 중</div>
+                </td>
+            </tr>
+            </tbody>
             <script>
                 function displayLocalStorageData() {
                     // Kiểm tra xem có dữ liệu trong Local Storage không
@@ -159,7 +240,6 @@
                 }
             </script>
         </table>
-
     </div>
 </div>
 
@@ -181,13 +261,76 @@
                     <th>상태</th>
                 </tr>
                 </thead>
-                <tbody id="dynamicTbody"></tbody>
+                <tbody>
+                <tr class="mobile_detail_view">
+                    <td class="opertnTy">
+                        1
+                    </td>
+                    <td class="opertnTme" onclick="viewMobileDetail(this);">
+                        52678AHDU65DS7D4A67D2
+                    </td>
+                    <td class="gradNm mobile_detail">
+                        <div class="mobile_view title">스타벅스</div>
+                        <div class="mobile_view th">아이스 카페 아메리카노 T</div>
+                    </td>
+                    <td class=" mobile_detail">
+                        <div class="mobile_view th">홍승민</div>
+                    </td>
+                    <td class="mobile_detail">
+                        <div class="mobile_view th">010-8937-6522</div>
+                    </td>
+                    <td class="mobile_detail">
+                        <div class="mobile_view th">4500원</div>
+                    </td>
+                    <td class="mobile_detail">
+                        <div class="mobile_view th">2024.01.05</div>
+                    </td>
+                    <td class="mobile_detail">
+                        <div class="mobile_view th">거래완료</div>
+                    </td>
+                </tr>
+                </tbody>
             </table>
         </div>
+
     </div>
+    <ul id="giftreview_list">
 
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var totalCount = '0';
+                var pageNumber = '1';
+
+                $("#totalCountSpan").html(totalCount);
+                $("#totalCount").val(totalCount);
+
+                if (totalCount > 0) {
+                    $("#giftreview_list .no-data").remove();
+                }
+                // 조회결과가 없는 경우
+                else {
+                    var noDataHtml = $(".no-data").clone();
+                    $("#giftreview_list").append(noDataHtml);
+                    $("#giftreview_list .no-data").show();
+                }
+
+                // 다음 페이지가 존재하는 경우 더보기 버튼 노출
+                if (totalCount > 0 && (pageNumber * 10) < totalCount) {
+                    $('#listButton').show();
+                }
+                // 다음 페이지가 존재하지 않는 경우 더보기 버튼 숨김
+                else {
+                    $('#listButton').hide();
+                }
+
+                pageNumber++;
+                $('#pageNumber').val(pageNumber);
+            });
+        </script>
+    </ul>
+    </div>
 </footer>
-
 
 <script src="./js/bootstrap.bundle.min.js"></script>
 </body>
