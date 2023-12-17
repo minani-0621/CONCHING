@@ -16,7 +16,7 @@ export default function Navbar() {
                 <Link href="/">발급</Link>
               </li>
               <li>
-                <Link href="/mynft">조회</Link>
+                <Link href="/list">조회</Link>
               </li>
             </ul>
           </div>
@@ -30,7 +30,7 @@ export default function Navbar() {
               <Link href="/">발급</Link>
             </li>
             <li>
-              <Link href="/mynft">조회</Link>
+              <Link href="/list">조회</Link>
             </li>
           </ul>
         </div>
